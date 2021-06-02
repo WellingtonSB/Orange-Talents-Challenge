@@ -19,28 +19,21 @@ public class VeiculoService {
 	// define o dia do rodizio de acordo com o ultimo digito
 	private String defineDiaRodizio(Veiculo automovel) {
 
-		//Veiculo automovel = new Veiculo();
-
 		switch (automovel.getAnoModelo().substring(automovel.getAnoModelo().length() - 1)) {
 		case "0":
 		case "1":
-			System.out.println("Chamou rodizio SEGUNDA");
 			return DayOfWeek.MONDAY.toString();
 		case "2":
 		case "3":
-			System.out.println("Chamou rodizio TERÇA");
 			return DayOfWeek.TUESDAY.toString();
 		case "4":
 		case "5":
-			System.out.println("Chamou rodizio QUARTA");
 			return DayOfWeek.WEDNESDAY.toString();
 		case "6":
 		case "7":
-			System.out.println("Chamou rodizio QUINTA");
 			return DayOfWeek.THURSDAY.toString();
 		case "8":
 		case "9":
-			System.out.println("Chamou rodizio SEXTA");
 			return DayOfWeek.FRIDAY.toString();
 		default:
 			return "";
@@ -48,28 +41,24 @@ public class VeiculoService {
 	}
 
 	private boolean verificaRodizio(Veiculo veiculo) {
-		
+
 		if (LocalDateTime.now().getDayOfWeek().equals(DayOfWeek.SATURDAY)
-				|| LocalDateTime.now().getDayOfWeek().equals(DayOfWeek.SUNDAY)||
-				 LocalDateTime.now().getDayOfWeek().equals(DayOfWeek.valueOf(this.defineDiaRodizio(veiculo)))) {
-			System.out.println("verifica rodizio true");
+				|| LocalDateTime.now().getDayOfWeek().equals(DayOfWeek.SUNDAY)
+				|| LocalDateTime.now().getDayOfWeek().equals(DayOfWeek.valueOf(this.defineDiaRodizio(veiculo)))) {
 			return true;
-			
 		}
-		System.out.println("verifica rodizio false");
 		return false;
 	}
 
-	public Optional<Veiculo> cadastrarVeiculo(Veiculo veiculo) {
+	// chama as funções acima e salva o veiculo
+	public void cadastrarVeiculo(Veiculo veiculo) {
 
-		//veiculo.setAnoModelo(veiculo.getAnoModelo());
-	
-		
 		veiculo.setRodizioAtivo(verificaRodizio(veiculo));
-		
+
 		veiculo.setRodizio(defineDiaRodizio(veiculo));
 
-		return Optional.of(repository.save(veiculo));
+		// return Optional.of(repository.save(veiculo));
+		repository.save(veiculo);
 	}
 
 }

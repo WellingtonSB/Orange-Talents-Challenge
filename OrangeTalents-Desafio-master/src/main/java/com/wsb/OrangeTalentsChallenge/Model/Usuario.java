@@ -9,25 +9,27 @@ import org.hibernate.validator.constraints.br.CPF;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-	@Entity
-	@Table(name="Usuario")
-	public class Usuario {
+@Entity
+@Table(name = "Usuario")
+public class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
+	@NotBlank
 	private String nome;
-	
+
+	@NotBlank
 	@Email
 	private String email;
-	
+
 	@CPF
+	@NotBlank
 	private String cpf;
 
-	@JsonFormat(pattern="dd-MM-yyyy")
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
-	
 
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
@@ -81,5 +83,4 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 		this.veiculo = veiculos;
 	}
 
- 
 }
